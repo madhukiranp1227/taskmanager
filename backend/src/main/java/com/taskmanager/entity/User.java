@@ -1,5 +1,6 @@
 package com.taskmanager.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -29,6 +30,7 @@ public class User {
     private String email;
 
     @NotBlank
+    @JsonIgnore
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -37,9 +39,11 @@ public class User {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "assignedTo", fetch = FetchType.LAZY)
     private List<Task> assignedTasks;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "createdBy", fetch = FetchType.LAZY)
     private List<Task> createdTasks;
 

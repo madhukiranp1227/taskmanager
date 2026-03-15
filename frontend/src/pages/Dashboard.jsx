@@ -34,9 +34,11 @@ const Dashboard = () => {
   const fetchUsers = async () => {
     try {
       const res = await api.get('/users')
-      setUsers(res.data)
+      // Ensure we always set an array
+      setUsers(Array.isArray(res.data) ? res.data : [])
     } catch (err) {
       console.error(err)
+      setUsers([])
     }
   }
 
