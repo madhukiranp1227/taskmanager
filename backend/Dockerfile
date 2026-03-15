@@ -10,3 +10,4 @@ WORKDIR /app
 COPY --from=build /app/target/taskmanager-backend-1.0.0.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-Dspring.profiles.active=prod", "-jar", "app.jar"]
+# force rebuild Sun Mar 15 00:55:50 PDT 2026
