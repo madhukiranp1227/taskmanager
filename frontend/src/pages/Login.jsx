@@ -34,6 +34,10 @@ const Login = () => {
         <h2 className="auth-title">Welcome back</h2>
         <p className="auth-subtitle">Sign in to your account</p>
 
+        <div className="server-notice">
+          ⚡ First login may take ~30 sec — free server wakes up on demand
+        </div>
+
         {error && <div className="auth-error">{error}</div>}
 
         <form onSubmit={handleSubmit} className="auth-form">

@@ -1,7 +1,14 @@
 import axios from 'axios'
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api'
+
+// Wake up the Render backend on app load (free tier cold start fix)
+if (import.meta.env.PROD) {
+  axios.get(`${BASE_URL}/auth/health`).catch(() => {})
+}
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api',
+  baseURL: BASE_URL,
 })
 
 // Attach JWT token to every request

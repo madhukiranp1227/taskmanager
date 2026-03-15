@@ -34,6 +34,10 @@ const Register = () => {
         <h2 className="auth-title">Create account</h2>
         <p className="auth-subtitle">Start managing tasks today</p>
 
+        <div className="server-notice">
+          ⚡ First request may take ~30 sec — free server wakes up on demand
+        </div>
+
         {error && <div className="auth-error">{error}</div>}
 
         <form onSubmit={handleSubmit} className="auth-form">
