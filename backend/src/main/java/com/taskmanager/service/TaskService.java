@@ -7,6 +7,7 @@ import com.taskmanager.entity.TaskActivity;
 import com.taskmanager.entity.User;
 import com.taskmanager.exception.ResourceNotFoundException;
 import com.taskmanager.exception.UnauthorizedException;
+import com.taskmanager.repository.CommentRepository;
 import com.taskmanager.repository.TaskActivityRepository;
 import com.taskmanager.repository.TaskRepository;
 import com.taskmanager.repository.UserRepository;
@@ -30,6 +31,7 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
     private final TaskActivityRepository activityRepository;
+    private final CommentRepository commentRepository;
 
     // ── Helpers ────────────────────────────────────────────────────────
 
@@ -205,8 +207,9 @@ public class TaskService {
             throw new UnauthorizedException("You are not allowed to delete this task");
         }
 
-        logActivity(task, currentUser, TaskActivity.ActivityType.DELETED,
-                "Task '" + task.getTitle() + "' was deleted");
+        // Delete related comments and activity logs first (FK constraint)
+        activityRepository.deleteAll(activityRepository.findByTaskIdOrderByPerformedAtDesc(id));
+        commentRepository.deleteAll(commentRepository.findByTaskIdOrderByCreatedAtDesc(id));
 
         taskRepository.delete(task);
     }
